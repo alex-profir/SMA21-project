@@ -1,12 +1,26 @@
 import { StatusBar } from 'expo-status-bar';
-import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import React, { useState } from 'react';
+import { StyleSheet, Text, View, TextInput, Button } from 'react-native';
+import Constants from 'expo-constants';
+import { login } from './src/services/auth.service';
+import Login from './src/pages/login';
+import { NavigationContainer } from '@react-navigation/native';
+import { Provider } from "react-redux"
+import { store } from './src/store';
+import Routes from './src/routes/Routes';
+import { SocketIoContextProvider } from './src/contexts/SocketIoContext';
 
 export default function App() {
   return (
     <View style={styles.container}>
-      <Text>Open up App.tsx to start working on your app!</Text>
-      <StatusBar style="auto" />
+      <Provider store={store}>
+        <SocketIoContextProvider>
+          <NavigationContainer>
+            <Routes />
+          </NavigationContainer>
+        </SocketIoContextProvider>
+        {/* <Login /> */}
+      </Provider>
     </View>
   );
 }
@@ -14,8 +28,8 @@ export default function App() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
+    padding: 0,
+    margin: 0,
+    backgroundColor: 'blue',
   },
 });
