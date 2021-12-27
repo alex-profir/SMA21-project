@@ -5,10 +5,18 @@ import { useDispatch } from "../store";
 import { retrieveStorageToken } from "../utils/utilFunctions";
 import { useEffectAsync } from "./useEffectAsync";
 
+function sleep(ms: number) {
+    return new Promise((res) => setTimeout(res, ms))
+}
+
 const useInitialize = () => {
     const [checked, setChecked] = useState(false);
     const dispatch = useDispatch();
     useEffectAsync(async () => {
+
+        // here to test the loader
+        // await sleep(2000);
+        
         try {
             await retrieveStorageToken();
             const req = await getCurrentUser();

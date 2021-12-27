@@ -8,8 +8,9 @@ import useInitialize from "../hooks/useInitialize";
 import { View, Text } from "react-native";
 import { useSelector } from "../store";
 import { AuthGuard } from "../components/Guards/AuthGuard";
+import { Loader } from "../pages/Loading";
 
-const Stack = createNativeStackNavigator();
+export const Stack = createNativeStackNavigator();
 
 function createStacks(r: RouteType[]) {
 
@@ -33,11 +34,7 @@ export default function () {
     const { checked } = useInitialize();
 
     if (!checked) {
-        return <View >
-            <Text>
-                Loading ...
-            </Text>
-        </View>;
+        return <Loader />;
     }
     return <>
         <AuthGuard>
