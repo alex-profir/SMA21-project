@@ -9,15 +9,18 @@ import { Provider } from "react-redux"
 import { store } from './src/store';
 import Routes from './src/routes/Routes';
 import { SocketIoContextProvider } from './src/contexts/SocketIoContext';
+import { SearchBoxContextProvider } from './src/contexts/SearchBoxContext';
 
 export default function App() {
   return (
     <View style={styles.container}>
       <Provider store={store}>
         <SocketIoContextProvider>
-          <NavigationContainer>
-            <Routes />
-          </NavigationContainer>
+          <SearchBoxContextProvider>
+            <NavigationContainer>
+              <Routes />
+            </NavigationContainer>
+          </SearchBoxContextProvider>
         </SocketIoContextProvider>
         {/* <Login /> */}
       </Provider>

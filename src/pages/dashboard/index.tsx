@@ -1,70 +1,63 @@
-import React, { useMemo, useState } from "react";
-import { View, Image } from "react-native"
-import { Avatar } from "react-native-elements/dist/avatar/Avatar";
+import React, { useRef, useState } from "react";
+import { View } from "react-native"
 import { endpointURL } from "../../services/config";
 import { useSelector } from "../../store";
-import { getAverageRGB, getImageOrFallback } from "../../utils/utilFunctions";
-import ImageColors from 'react-native-image-colors'
 import { getRgb } from "../../services/file.service";
 import { useEffectAsync } from "../../hooks/useEffectAsync";
-import { Tab as ReTab, TabView, Text } from "react-native-elements";
+import { Button, FAB, Text } from "react-native-elements";
 import { Feather } from '@expo/vector-icons';
 
 import { Ionicons } from '@expo/vector-icons';
+import * as Svg from 'react-native-svg';
+import * as d3Shape from 'd3-shape';
 import { NavigationContainer } from "@react-navigation/native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import { Profile } from "../profile/Profile";
 import { Messenger } from "../messenger";
+import { Socials } from "../profile/Socials";
+import { SocialsHeader } from "../../components/SocialsHeader";
+import { px, width } from "../../styles";
+import { Renderer } from "../../components/WheelComponent";
+import Wheel from "../../components/Wheel";
 
-
-const NaviagtionPart = () => {
-
-    const [index, setIndex] = useState(0);
-    return <>
-        <ReTab
-            value={index}
-            onChange={(e) => setIndex(e)}
-            indicatorStyle={{
-                backgroundColor: 'white',
-                height: 3,
-            }}
-            variant="primary"
-        >
-            <ReTab.Item
-                title="Dashboard"
-                titleStyle={{ fontSize: 12 }}
-                icon={{ name: 'timer', type: 'ionicon', color: 'white' }}
-            />
-            <ReTab.Item
-                title="Profile"
-                titleStyle={{ fontSize: 12 }}
-                icon={{ name: 'heart', type: 'ionicon', color: 'white' }}
-            />
-            <ReTab.Item
-                title="Messenger"
-                titleStyle={{ fontSize: 12 }}
-                icon={{ name: 'cart', type: 'ionicon', color: 'white' }}
-            />
-        </ReTab>
-
-        <TabView value={index} onChange={setIndex} animationType="spring">
-            <TabView.Item style={{ backgroundColor: 'red', width: '100%' }}>
-                <Text h1>Recent</Text>
-            </TabView.Item>
-            <TabView.Item style={{ backgroundColor: 'blue', width: '100%' }}>
-                <Text h1>Favorite</Text>
-            </TabView.Item>
-            <TabView.Item style={{ backgroundColor: 'green', width: '100%' }}>
-                <Text h1>Cart</Text>
-            </TabView.Item>
-        </TabView>
-    </>
-}
 function HomeScreen() {
-    return <View>
-        <Text>
+    const user = useSelector(state => state.userReducer);
+    return <View style={{
+        paddingTop: 50,
+        // paddingLeft: 10,
+        display: "flex",
+        alignItems: "center"
+    }}>
+        {/* <Text>
             Home Screen
         </Text>
+        <Text>
+            Quite Boring
+        </Text> */}
+        {/* <View style={{
+            height: wheelSize / 2,
+            // width: wheelSize,
+
+            // borderRadius: wheelSize / 2,
+            // width: width - 20,
+            // backgroundColor: "blue"
+        }}>
+        </View> */}
+        {/* <Button title="Spin" /> */}
+        {/* <View> */}
+        {/* <FAB
+                visible={true}
+                color="red"
+                style={{
+                    position: "absolute",
+                    zIndex: 100,
+                    left: width * 0.95 / 2 - 25,
+                    top: width * 0.95 / 2 + 30,
+                }}
+                icon={{ name: 'sync', color: 'white', }}
+            /> */}
+        <Wheel user={user} />
+        {/* <Renderer /> */}
+        {/* </View> */}
     </View>
 }
 
@@ -79,7 +72,7 @@ const IconsMap = {
         focused: "message-circle",
         component: Feather
     },
-    "MyProfile": {
+    "Socials": {
         normal: "ios-person-circle-outline",
         focused: "ios-person-circle",
         component: Ionicons,
@@ -143,8 +136,18 @@ const Dashboard = () => {
                 <Tab.Screen name="Dashboard" component={HomeScreen} />
                 {/* MyProfile */}
                 <Tab.Screen name="Messenger" component={Messenger} />
-                <Tab.Screen name="MyProfile"  >
-                    {props => <Profile {...props} />}
+                <Tab.Screen listeners={({ navigation }) => ({
+                    tabPress: e => {
+                        e.preventDefault();
+
+                        navigation.navigate("Socials", {
+                            screen: "SocialsView"
+                        })
+                    }
+                })} name="Socials" options={{
+                    tabBarBadge: user.friendRequests.length || undefined,
+                }}>
+                    {Socials}
                 </Tab.Screen>
             </Tab.Navigator>
         </NavigationContainer>

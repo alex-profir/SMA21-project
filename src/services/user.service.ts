@@ -21,6 +21,9 @@ export const sendFriendRequest = (userId: string) => {
     }, { headers });
 }
 
+export const patchUser = (userId: string, userBody: Partial<FullUser>) => {
+    return axios.patch<FullUser>(`/user/${userId}`, userBody, { headers })
+}
 
 export const acceptFriendRequest = (userId: string) => {
     return axios.post<any>(`/user/accept-friend-request`, {

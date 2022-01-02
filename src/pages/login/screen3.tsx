@@ -17,6 +17,7 @@ import { login as loginApiCall, register, } from "../../services/auth.service";
 import { isAxiosError, storeToken } from '../../utils/utilFunctions';
 import { ServerError } from '../../models/ServerError';
 import { useNavigation } from '../../routes';
+import { NativeStackScreenProps } from '@react-navigation/native-stack';
 
 const SCREEN_WIDTH = Dimensions.get('window').width;
 const SCREEN_HEIGHT = Dimensions.get('window').height;
@@ -40,10 +41,9 @@ const TabSelector: React.FunctionComponent<TabSelectorProps> = ({
     );
 };
 
-const LoginScreen3 = () => {
-
+const LoginScreen3 = (p: NativeStackScreenProps<any, any>) => {
+    const { navigation: nav } = p;
     const dispatch = useDispatch();
-    const nav = useNavigation();
     const [isLoading, setLoading] = useState<boolean>(false);
     const [email, setEmail] = useState<string>('alex_profir@yahoo.com');
     const [isEmailValid, setEmailValid] = useState<boolean>(true);

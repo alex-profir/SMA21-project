@@ -17,4 +17,5 @@ export type FullUser = User & {
     updatedAt: string;
     createdAt: string;
     avatar?: string;
+    balance: number;
 }

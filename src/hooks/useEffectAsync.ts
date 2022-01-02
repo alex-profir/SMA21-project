@@ -8,6 +8,7 @@ function isPromise(obj: any): obj is Promise<any> {
 
 export const useEffectAsync = (fn: fnSignature, deps: any[] = []) => {
     const [error, setError] = useState<any>(null);
+
     useEffect(() => {
         let cleanup = () => { };
         try {

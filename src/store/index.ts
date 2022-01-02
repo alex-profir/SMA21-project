@@ -11,4 +11,5 @@ export const useDispatch = () => reduxUseDispatch<typeof store["dispatch"]>() as
 
 export const store = createStore(
     appReducer,
+    applyMiddleware(reduxThunk)
 );

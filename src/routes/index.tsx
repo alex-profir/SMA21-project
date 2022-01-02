@@ -2,6 +2,18 @@ import React from "react";
 import { NavigationProp, useNavigation as RNUserNavigation } from "@react-navigation/native";
 import Login from "../pages/login";
 import Dashboard from "../pages/dashboard";
+import { FullUser } from "../models/User";
+export type Root = {
+    Socials: {},
+    SocialsView: {},
+    PersonView: {
+        user: FullUser,
+        room: string
+    }
+    ProfileView: {
+        userId: string;
+    }
+}
 
 export const auth = {
     login: {
@@ -22,7 +34,7 @@ const allRoutes = {
     ...dashboard
 }
 
-export type RouteType =  {
+export type RouteType = {
     [name: string]: {
         component: React.FunctionComponent<any>// | React.ComponentClass<any>
     },

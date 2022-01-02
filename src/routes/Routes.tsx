@@ -1,12 +1,7 @@
 import React, { Fragment } from "react";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import { NavigationContainer } from "@react-navigation/native";
 import { authRoutes, dashboardRoutes, RouteType } from ".";
-import { useEffectAsync } from "../hooks/useEffectAsync";
-import { retrieveStorageToken } from "../utils/utilFunctions";
 import useInitialize from "../hooks/useInitialize";
-import { View, Text } from "react-native";
-import { useSelector } from "../store";
 import { AuthGuard } from "../components/Guards/AuthGuard";
 import { Loader } from "../pages/Loading";
 

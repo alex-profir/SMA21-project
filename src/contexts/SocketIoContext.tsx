@@ -30,6 +30,7 @@ export const SocketIoContextProvider: React.FC = ({ children }) => {
                     type: "SET_USER",
                     user: req.data,
                 });
+                socket.emit("update");
             })
         }
         if (!user && socket && socket.connected) {

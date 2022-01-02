@@ -26,7 +26,8 @@ export async function retrieveStorageToken(): Promise<string | void> {
 }
 
 export function removeTokenFromLocalStorage() {
-    localStorage.removeItem(userTokenLocalStorageKey);
+    AsyncStorage.removeItem(userTokenLocalStorageKey);
+    // localStorage.removeItem(userTokenLocalStorageKey);
 }
 
 //https://stackoverflow.com/questions/2541481/get-average-color-of-image-via-javascript
