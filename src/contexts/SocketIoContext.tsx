@@ -1,5 +1,5 @@
-import { useEffect, useState } from "react";
-import React, { useContext } from "react";
+import { useState } from "react";
+import React from "react";
 import { createContext } from "react";
 import { endpointURL } from "../services/config";
 import { io, Socket } from "socket.io-client";
@@ -7,9 +7,21 @@ import { useEffectAsync } from "../hooks/useEffectAsync";
 import { getCurrentUser } from "../services/auth.service";
 import { useDispatch, useSelector } from "../store";
 import { retrieveStorageToken } from "../utils/utilFunctions";
+import * as Notifications from 'expo-notifications';
 
 export const SocketContext = createContext<Socket>(null!);
 
+export async function schedulePushNotification(message: string) {
+    await Notifications.scheduleNotificationAsync({
+        content: {
+            title: "You've got mail! 📬",
+            body: 'Here is the notification body',
+            data: { data: 'goes here' },
+
+        },
+        trigger: { seconds: 2 },
+    });
+}
 
 
 export const SocketIoContextProvider: React.FC = ({ children }) => {
@@ -46,6 +58,4 @@ export const SocketIoContextProvider: React.FC = ({ children }) => {
     return <SocketContext.Provider value={socket}>
         {children}
     </SocketContext.Provider>
-
-
 }

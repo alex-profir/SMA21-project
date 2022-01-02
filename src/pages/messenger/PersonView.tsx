@@ -20,7 +20,7 @@ type MessageType = {
 }
 
 
-type Message = {
+export type Message = {
     text: string;
     user: FullUser;
     room: string;
@@ -41,7 +41,6 @@ export const PersonView = (p: NativeStackScreenProps<Root, "PersonView">) => {
 
     useEffect(() => {
         socket.on("message", (message) => {
-            console.log({ message });
             if (message.room === roomId) {
                 setMessageList(messageList => [...messageList, message]);
             }

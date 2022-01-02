@@ -4,7 +4,8 @@ import {
     View,
     Text as RNText,
     Dimensions,
-    Animated
+    Animated,
+    ToastAndroid
 } from 'react-native';
 import { Svg, G, Path, Text, TSpan } from 'react-native-svg';
 import * as d3Shape from 'd3-shape';
@@ -12,9 +13,10 @@ import * as d3Shape from 'd3-shape';
 import { snap } from '@popmotion/popcorn';
 import { HandlerStateChangeEvent, PanGestureHandler, PanGestureHandlerEventPayload, State } from "react-native-gesture-handler";
 import { width } from "../styles";
-import { FAB } from 'react-native-elements';
+import { Button, FAB } from 'react-native-elements';
 import { patchUser } from '../services/user.service';
 import { FullUser } from '../models/User';
+import * as IntentLauncher from 'expo-intent-launcher';
 function randn_bm(min: number, max: number, skew: number) {
     let u = 0, v = 0;
     while (u === 0) u = Math.random() //Converting [0,1) to (0,1)
@@ -85,7 +87,6 @@ export default class App extends React.Component<{ user: FullUser }> {
                     finished: false
                 });
             }
-            // console.log(event.value);
             this.angle = event.value;
         });
     }
@@ -106,17 +107,11 @@ export default class App extends React.Component<{ user: FullUser }> {
             arcs
             - (this.angle % oneTurn)
             ;
-        console.log({
-            _angle: this._angle
-        })
         Animated.decay(this._angle, {
             velocity: velocity / 1000,
             deceleration: 0.999,
             useNativeDriver: true,
         }).start(() => {
-            console.log({
-                andle: this.angle
-            })
             this._angle.setValue(this.angle % oneTurn);
             const snapTo = snap(oneTurn / numberOfSegments);
             Animated.timing(this._angle, {
@@ -156,6 +151,23 @@ export default class App extends React.Component<{ user: FullUser }> {
                 />
                 <View style={styles.container}>
                     {this._renderSvgWheel()}
+                    {this.state.finished && this.state.enabled && <View style={{
+                        position: "absolute",
+                        bottom: 50
+                    }}>
+                        <Button title="Share" onPress={async () => {
+                            const result = await IntentLauncher.startActivityAsync("android.intent.action.SEND" as any, {
+                                extra: {
+                                    "android.intent.extra.TEXT": `I just won ${this.state.winner} credits 🔥! Join Roly Poly now!`,
+                                },
+                                type: "text/plain",
+                            })
+
+                            if (result.resultCode === IntentLauncher.ResultCode.Success) {
+                                ToastAndroid.show("Shared ;)", 15);
+                            }
+                        }} />
+                    </View>}
                     {this.state.finished && this.state.enabled && this._renderWinner()}
                 </View>
             </View>
@@ -265,7 +277,8 @@ export default class App extends React.Component<{ user: FullUser }> {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#fff',
+        // marginBottom: 20,
+        // backgroundColor: '#fff',
         alignItems: 'center',
         // justifyContent: 'center'
     },

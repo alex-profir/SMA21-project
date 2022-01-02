@@ -304,14 +304,6 @@ const LoginScreen3 = (p: NativeStackScreenProps<any, any>) => {
                             disabled={isLoading}
                         />
                     </View>
-                    <View style={styles.helpContainer}>
-                        <Button
-                            title={'Need help ?'}
-                            titleStyle={{ color: 'white' }}
-                            buttonStyle={{ backgroundColor: 'transparent' }}
-                            onPress={() => Alert.alert('🤔', 'Forgot Password Route')}
-                        />
-                    </View>
                 </View>
             </ImageBackground>
         </View>

@@ -11,6 +11,7 @@ import { Root } from "../../routes";
 import { Stack } from "../../routes/Routes";
 import { searchUsers } from "../../services/user.service";
 import { useSelector } from "../../store";
+import { width } from "../../styles";
 import { Loader } from "../Loading";
 import { Profile } from "./Profile";
 import { RenderUserRequest } from "./UserFriendRequest";
@@ -26,15 +27,25 @@ const SocialsView = (p: NativeStackScreenProps<Root, "PersonView">) => {
                 userId: user._id
             })
         }} />
-        <Text >
-            Balance is {user.balance} credits
-        </Text>
         <FlatList<string>
             data={user.friendRequests}
             keyExtractor={(_, index: number) => index.toString()}
 
             renderItem={props => <RenderUserRequest userId={props.item} />}
         />
+        <View style={{
+            display: "flex",
+            alignItems: "center",
+            top: width / 2,
+            // flex: 1
+        }}>
+            <Text style={{
+                fontSize: 26,
+                fontWeight: "bold"
+            }}>
+                You have <Text style={{ color: "green" }}>{user.balance}</Text> credits
+            </Text>
+        </View>
     </View>
 }
 const UserSearch = () => {

@@ -27,37 +27,7 @@ function HomeScreen() {
         display: "flex",
         alignItems: "center"
     }}>
-        {/* <Text>
-            Home Screen
-        </Text>
-        <Text>
-            Quite Boring
-        </Text> */}
-        {/* <View style={{
-            height: wheelSize / 2,
-            // width: wheelSize,
-
-            // borderRadius: wheelSize / 2,
-            // width: width - 20,
-            // backgroundColor: "blue"
-        }}>
-        </View> */}
-        {/* <Button title="Spin" /> */}
-        {/* <View> */}
-        {/* <FAB
-                visible={true}
-                color="red"
-                style={{
-                    position: "absolute",
-                    zIndex: 100,
-                    left: width * 0.95 / 2 - 25,
-                    top: width * 0.95 / 2 + 30,
-                }}
-                icon={{ name: 'sync', color: 'white', }}
-            /> */}
         <Wheel user={user} />
-        {/* <Renderer /> */}
-        {/* </View> */}
     </View>
 }
 
@@ -133,9 +103,22 @@ const Dashboard = () => {
                     // tabBarLabelPosition:"beside-icon",
                 })}
             >
-                <Tab.Screen name="Dashboard" component={HomeScreen} />
+                <Tab.Screen name="Dashboard" component={HomeScreen}
+                />
                 {/* MyProfile */}
-                <Tab.Screen name="Messenger" component={Messenger} />
+                <Tab.Screen name="Messenger" component={Messenger}
+                    options={{
+                        unmountOnBlur: true
+                    }}
+                    listeners={({ navigation }) => ({
+                        tabPress: e => {
+                            e.preventDefault();
+
+                            navigation.navigate("Messenger", {
+                                screen: "PersonList"
+                            })
+                        }
+                    })} />
                 <Tab.Screen listeners={({ navigation }) => ({
                     tabPress: e => {
                         e.preventDefault();

@@ -133,24 +133,17 @@ export const Profile = (p: NativeStackScreenProps<Root, "ProfileView">) => {
                         type: "image/*"
                     });
                     if (doc.type === "success") {
-                        console.log("success");
                         try {
-                            const data = await postProfilePicture({
+                           await postProfilePicture({
                                 uri: doc.uri,
                                 type: doc.mimeType,
                                 name: doc.name
                             } as any);
-                            console.log({ data: data.data })
                         } catch (e) {
-                            console.log({ e });
                         }
                         // dispatch(uploadUserProfilePicture(doc.file as any));
                         // await uploadUserProfilePicture(doc.file as any);
-                        console.log(doc.file);
-                        console.log({ doc });
                     } else {
-
-                        console.log("cancel");
                     }
                 }}
             >

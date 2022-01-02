@@ -68,7 +68,6 @@ export const Renderer = () => {
             }
             angleRef.current = event.value;
             // setAngle(event.value);
-            // console.log(event.value);
         });
         return () => {
             _angle.removeAllListeners();
@@ -79,8 +78,6 @@ export const Renderer = () => {
         const deg = Math.abs(Math.round(angle % oneTurn));
         return Math.floor(deg / angleBySegment);
     };
-    // console.log({ angle });
-
     const _onPan = ({ nativeEvent }: HandlerStateChangeEvent<PanGestureHandlerEventPayload>) => {
 
         if (nativeEvent.state === State.END) {
@@ -91,17 +88,14 @@ export const Renderer = () => {
                 deceleration: 0.999,
                 useNativeDriver: true
             }).start(() => {
-                console.log({ angle: angle % oneTurn });
                 _angle.setValue(angle % oneTurn);
                 const snapTo = snap(oneTurn / numberOfSegments);
-                console.log({ snapTo: snapTo(angle) });
                 Animated.timing(_angle, {
                     toValue: snapTo(angle),
                     duration: 300,
                     useNativeDriver: true
                 }).start(() => {
                     const winnerIndex = _getWinnerIndex();
-                    console.log({ value: wheelPaths[winnerIndex].value })
                     setEnabled(true);
                     // this.setState({
                     //     enabled: true,

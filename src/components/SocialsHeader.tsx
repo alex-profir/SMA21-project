@@ -15,11 +15,10 @@ export const SocialsHeader = (p: HeaderTitleProps) => {
         width: width - 30
     }}>
         <Text h4>
-            {p.children} Test
+            Socials View
         </Text>
         <View style={{ flex: 1 }} />
         <FontAwesome.Button onPress={() => {
-            console.log("Search");
             nav.navigate("Socials", {
                 screen: "UserSearch"
             })
